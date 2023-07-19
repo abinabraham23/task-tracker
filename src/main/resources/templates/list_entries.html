@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Entries</title>
+    <style>
+        body {
+            background-color: #00CED1; /* Turquoise color background */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff; /* White color for the form container */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .submit-button {
+            background-color: #00CED1; /* Turquoise color submit button */
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background-color: #20B2AA; /* Darker turquoise color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Task Entry</h1>
+        <form th:action="@{/tasks}" th:object="${entry}" method="post">
+            <div class="form-group">
+                <label for="taskId">Task ID:</label>
+                <input type="text" id="taskId" th:field="*{taskId}" required><br>
+            </div>
+            <div class="form-group">
+                <label for="owner">Owner:</label>
+                <input type="text" id="owner" th:field="*{owner}" required><br>
+            </div>
+            <div class="form-group">
+                <label for="timeConsumed">Time Consumed:</label>
+                <input type="text" id="timeConsumed" th:field="*{timeConsumed}" required><br>
+            </div>
+            <div class="form-group">
+                <label for="difficulty">Difficulty:</label>
+                <!-- <input type="text" id="difficulty" th:field="*{difficulty}" required><br> -->
+                <select id="difficulty" th:field="*{difficulty}" required>
+                    <option value="">Select</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment:</label>
+                <textarea id="comment" th:field="*{comment}" required></textarea><br>
+            </div>
+            <button type="submit" class="submit-button">Add Entry</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <h2>Tasks List</h2>
+        <ul>
+            <li th:each="entry : ${entries}">
+                <strong>Task ID:</strong> <span th:text="${entry.taskId}"></span><br>
+                <strong>Owner:</strong> <span th:text="${entry.owner}"></span><br>
+                <strong>Time Consumed:</strong> <span th:text="${entry.timeConsumed}"></span><br>
+                <strong>Difficulty:</strong> <span th:text="${entry.difficulty}"></span><br>
+                <strong>Comment:</strong> <span th:text="${entry.comment}"></span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
